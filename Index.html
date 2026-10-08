@@ -1,0 +1,295 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reel Mood · Your next feeling</title><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><style>
+:root{--bg:#0b0b10;--card:#14141c;--line:rgba(255,255,255,.1);--fg:#f3f1ec;--mut:#8f8c99;--acc:#ff5d73;--acc2:#ffb86b;--r:14px}
+*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth}
+body{background:radial-gradient(900px 420px at 50% -10%,rgba(255,93,115,.13),transparent 70%),var(--bg);color:var(--fg);font:400 15px/1.55 Inter,system-ui,sans-serif;min-height:100vh;padding:0 20px 120px;-webkit-font-smoothing:antialiased}
+.w{max-width:1040px;margin:auto}
+h1,h2,h3{font-family:'Bebas Neue',Impact,sans-serif;font-weight:400;letter-spacing:.02em;line-height:.98}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+.logo{font:400 22px 'Bebas Neue',Impact;letter-spacing:.14em}.logo b{color:var(--acc);font-weight:400}
+.counter{color:var(--mut);font-size:13px}
+.hero{padding:70px 0 40px;max-width:640px}
+.hero h1{font-size:clamp(54px,10vw,104px);margin-bottom:18px}.hero h1 em{font-style:normal;color:var(--acc)}
+.hero p{color:var(--mut);font-size:17px;max-width:480px;margin-bottom:28px}
+.hero-note{margin-top:18px;color:var(--mut);font-size:13px}
+.eyebrow{color:var(--mut);font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--acc);color:#fff;border:0;padding:12px 24px;border-radius:999px;font:600 14px Inter,sans-serif;cursor:pointer;text-decoration:none;transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-1px);background:#ff7488}
+.btn.g{background:transparent;border:1px solid var(--line);color:var(--fg)}.btn.g:hover{background:rgba(255,255,255,.07)}
+.mini{display:inline-flex;align-items:center;font:500 12px Inter,sans-serif;padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--fg);cursor:pointer;text-decoration:none}
+.mini:hover{background:rgba(255,255,255,.12)}
+.mini[disabled],.btn[disabled]{opacity:.35;pointer-events:none}
+.hid{display:none!important}
+.quiz{max-width:820px;margin:30px auto}
+.quiz-head{display:flex;justify-content:space-between;margin-bottom:10px}.step{color:var(--mut);font-size:12px;letter-spacing:.08em}
+.bar{height:3px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:34px}.bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .4s}
+.quiz h2{font-size:clamp(32px,5.5vw,52px);text-align:center;margin-bottom:26px}
+.sub{display:block;font:400 13px Inter,sans-serif;letter-spacing:0;color:var(--mut);margin-top:10px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.opt{background:var(--card);border:1px solid var(--line);color:var(--fg);padding:16px 10px;border-radius:var(--r);font:500 14px Inter,sans-serif;cursor:pointer;transition:border-color .15s,background .15s,transform .15s;animation:up .35s both}
+.opt span{display:block;font-size:26px;margin-bottom:6px}
+.opt:hover{border-color:rgba(255,255,255,.3);transform:translateY(-2px)}
+.opt.sel{border-color:var(--acc);background:rgba(255,93,115,.14)}
+.qctl{display:flex;justify-content:center;align-items:center;gap:10px;margin-top:26px;flex-wrap:wrap}
+@keyframes up{from{opacity:0;transform:translateY(10px)}}
+.res{padding-top:30px}
+.result-head{margin-bottom:26px}.result-head h2{font-size:clamp(42px,7vw,72px);margin-top:6px}.result-head p{color:var(--mut)}
+.top{display:grid;grid-template-columns:minmax(200px,300px) 1fr;gap:34px;align-items:center;padding:24px;margin-bottom:40px;background:var(--card);border:1px solid var(--line);border-radius:20px}
+@media(max-width:700px){.top{grid-template-columns:1fr;padding:18px}.top .poster{max-width:260px;margin:auto;width:100%}}
+.badge{display:inline-block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc2);margin-bottom:8px}
+.top h3{font-size:clamp(40px,6vw,68px);margin-bottom:6px}
+.meta{color:var(--mut);margin-bottom:6px}
+.m{font:400 34px 'Bebas Neue';color:var(--acc);letter-spacing:.03em}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.chip{padding:4px 11px;border-radius:999px;background:rgba(255,255,255,.07);font-size:12px;color:#cfccd6}
+.why{font-size:12px;color:var(--acc2);margin:6px 0 4px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:22px}
+.card{animation:up .45s both}.card h4{font:600 15px Inter,sans-serif;margin:10px 0 2px}.card small{color:var(--mut);font-size:12px}
+.pct{position:absolute;top:8px;right:8px;z-index:3;background:rgba(0,0,0,.7);padding:3px 9px;border-radius:999px;font-size:12px;font-weight:600;color:var(--acc2)}
+.poster{position:relative;aspect-ratio:2/3;border-radius:12px;overflow:hidden;background:#1a1a24;box-shadow:0 14px 30px rgba(0,0,0,.45);transition:transform .25s}
+.poster:hover{transform:translateY(-4px)}
+.poster .fb{position:absolute;inset:0;display:flex;align-items:flex-end;padding:14px;font:30px/1 'Bebas Neue',Impact;letter-spacing:.03em;z-index:1}
+.poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s;z-index:2}
+.foot{text-align:center;margin-top:40px}
+#dock{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:50;display:flex;gap:6px;align-items:center;padding:6px;background:rgba(20,20,28,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:999px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+#dock .btn{padding:10px 18px}
+.pop{position:relative}.pop summary{list-style:none;cursor:pointer;width:38px;height:38px;display:grid;place-items:center;border-radius:50%;color:var(--mut);font-size:18px}.pop summary::-webkit-details-marker{display:none}.pop summary:hover{background:rgba(255,255,255,.08)}
+.menu{position:absolute;bottom:50px;right:0;display:flex;flex-direction:column;gap:6px;padding:10px;background:#14141c;border:1px solid var(--line);border-radius:14px;white-space:nowrap}
+#tm{text-align:center;color:#6f6c79;font-size:11px;margin:60px auto 0;max-width:560px}
+#pchk{display:none;position:fixed;top:14px;left:50%;transform:translateX(-50%);width:min(92vw,700px);max-height:60vh;overflow:auto;background:rgba(10,10,14,.96);border:1px solid var(--line);border-radius:14px;padding:16px;z-index:60;font-size:13px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style><style id="calm">
+body{background:var(--bg)}
+.hero{padding:56px 0 30px}.hero h1{font-size:clamp(48px,8vw,84px)}.hero p{font-size:16px}
+.hero h1 em{color:var(--fg);opacity:.55}
+.logo{font-size:18px;letter-spacing:.2em}.logo b{color:inherit;opacity:.5}
+.btn{background:var(--fg);color:#0b0b10;font-weight:600}.btn:hover{background:#fff}
+.btn.g{background:transparent;color:var(--fg)}
+.quiz h2{font-size:clamp(28px,4.5vw,40px);margin-bottom:22px}
+.opts{grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+.opt{display:flex;align-items:center;justify-content:flex-start;text-align:left;padding:13px 16px;background:transparent;font-size:14px;animation:none}
+.opt span{display:none}
+.opt:hover{transform:none;background:rgba(255,255,255,.05)}
+.opt.sel{background:rgba(255,255,255,.1);border-color:var(--fg)}
+.bar i{background:var(--fg)}
+.result-head h2{font-size:clamp(34px,5vw,52px)}
+.top{background:none;border:0;border-top:1px solid var(--line);border-radius:0;padding:28px 0 0;margin-bottom:46px}
+.top h3{font-size:clamp(36px,5vw,56px)}
+.m{color:var(--fg);font-size:26px;opacity:.7}
+.badge,.why{color:var(--mut)}
+.chip{background:transparent;border:1px solid var(--line);color:var(--mut)}
+.pct{background:rgba(0,0,0,.65);color:var(--fg);font-weight:500}
+.poster{box-shadow:0 8px 20px rgba(0,0,0,.35)}.poster:hover{transform:none}
+.card{animation:none}
+#dock{background:rgba(20,20,28,.9);box-shadow:none}
+</style><style id="upl">.upl{margin-top:34px;padding:18px;border:1px dashed var(--line);border-radius:14px;max-width:500px}.upl.over{border-color:var(--fg);background:rgba(255,255,255,.04)}.upl p{color:var(--mut);font-size:13px;margin:6px 0 14px}#upst{margin-top:12px;font-size:13px;color:var(--mut)}</style></head><body>
+<div class="w">
+<header class="topbar"><div class="logo">REEL<b>MOOD</b></div><div class="counter" id="cnt"></div></header>
+<section class="hero" id="intro"><div class="eyebrow">Your Letterboxd watchlist</div><h1>Find your<br><em>next film.</em></h1><p>Eight quick questions about tonight's mood. Five picks from your own watchlist, with posters.</p><button class="btn" id="startb" onclick="start()">Start the quiz</button><div class="hero-note">Or use Random below for a surprise.</div><div class="upl" id="drop"><b>Use your own watchlist</b><p>On Letterboxd go to Settings → Import &amp; Export → Export your data, then choose <i>watchlist.csv</i> (or any CSV with Name and Year columns). It's read in your browser only.</p><label class="btn g" for="csvf" style="cursor:pointer">Choose CSV file</label><input type="file" id="csvf" accept=".csv,text/csv" hidden> <button class="mini" id="reset" style="display:none" onclick="resetList()">Back to sample list</button><div id="upst"></div></div></section>
+<section class="quiz hid" id="quiz"><div class="quiz-head"><span class="eyebrow">Quiz</span><span class="step" id="step"></span></div><div class="bar"><i id="pb"></i></div><h2 id="qt"></h2><div class="opts" id="qo"></div></section>
+<section class="res hid" id="res"></section><section class="hid" id="all" style="padding-top:40px"><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px"><h2 style="font:400 clamp(44px,8vw,84px)/.9 'Bebas Neue',Impact;margin-right:auto">All films</h2><button class="btn g" onclick="show('intro');scrollTo(0,0)">← Back</button></div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin:18px 0"><input id="asr" placeholder="Search title or year…" oninput="AS=this.value;renderAll()" style="flex:1;min-width:200px;padding:12px 16px;border-radius:30px;border:1px solid #ffffff33;background:#ffffff10;color:inherit;font:14px inherit"><select id="aso" onchange="AO=this.value;renderAll()" style="padding:12px 16px;border-radius:30px;border:1px solid #ffffff33;background:#17151f;color:inherit"><option value="az">A → Z</option><option value="new">Newest first</option><option value="old">Oldest first</option><option value="list">Watchlist order</option></select><span id="acount" style="align-self:center;color:#9e9aa7;font:12px Inter,sans-serif"></span></div>
+<div id="ag" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:20px 16px"></div></section>
+</div>
+<div id="pchk"></div><div id="dock"><button class="btn" onclick="randomPick()">Random</button><button class="btn g" onclick="showAll()">All films</button><details class="pop"><summary title="Poster settings" style="width:auto;padding:0 12px;font-size:13px;border-radius:999px">Posters</summary><div class="menu"><button class="mini" id="keyb" onclick="setKey()"></button><button class="mini" onclick="checkAll()">Check all posters</button></div></details></div><div id="tm" style="text-align:center;color:#8a8794;font:10px/1.5 Inter,sans-serif;margin:50px auto 0;max-width:620px">Posters and film data via TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB.</div><script>
+const RAW=[["La La Land", 2016, "JS2RE", "https://boxd.it/a5fa"], ["Whiplash", 2014, "TE3DE", "https://boxd.it/7bQA"], ["Oppenheimer", 2023, "ET3DE", "https://boxd.it/wUow"], ["The Substance", 2024, "DB3HE", "https://boxd.it/zanS"], ["Get Out", 2017, "TD3HE", "https://boxd.it/eOCm"], ["Eternal Sunshine of the Spotless Mind", 2004, "SB2RE", "https://boxd.it/6YK"], ["Midsommar", 2019, "D3HE", "https://boxd.it/jhxe"], ["Dead Poets Society", 1989, "SJ2DE", "https://boxd.it/2aSg"], ["American Psycho", 2000, "DT3HE", "https://boxd.it/28Vs"], ["Good Will Hunting", 1997, "SJ2DE", "https://boxd.it/2ahY"], ["The Silence of the Lambs", 1991, "TD3HE", "https://boxd.it/2aHW"], ["Shutter Island", 2010, "TB3HE", "https://boxd.it/1U82"], ["The Godfather", 1972, "ED3CE", "https://boxd.it/2aNK"], ["Baby Driver", 2017, "JT2CE", "https://boxd.it/bhF2"], ["Donnie Darko", 2001, "BD2FE", "https://boxd.it/2b2A"], ["Her", 2013, "SBC1RE", "https://boxd.it/4O24"], ["Titanic", 1997, "SE2RE", "https://boxd.it/2a2k"], ["Blade Runner 2049", 2017, "BE2FE", "https://boxd.it/b8wK"], ["Psycho", 1960, "TD2HE", "https://boxd.it/2ab2"], ["2001: A Space Odyssey", 1968, "BE2FE", "https://boxd.it/2bf0"], ["Schindler's List", 1993, "SE3DE", "https://boxd.it/2aq2"], ["GoodFellas", 1990, "TE3CE", "https://boxd.it/29FA"], ["Saroja", 2008, "JT2RI", "https://boxd.it/up0"], ["Cast Away", 2000, "SE2DE", "https://boxd.it/20i8"], ["Bugonia", 2025, "BD3FE", "https://boxd.it/qeWY"], ["Planet Earth II", 2016, "CE1FE", "https://boxd.it/eS8g"], ["Planet Earth", 2006, "CE1FE", "https://boxd.it/5Nx8"], ["Sopranos Unauthorized: Shooting Sites Uncovered", 2002, "C1CE", "https://boxd.it/uGPY"], ["Sentimental Value", 2025, "S2DW", "https://boxd.it/GwcG"], ["Train Dreams", 2025, "SC1DE", "https://boxd.it/LdDo"], ["Hamnet", 2025, "S2DE", "https://boxd.it/woVy"], ["Talvar", 2015, "T2CI", "https://boxd.it/bTxg"], ["Ayothi", 2023, "SJ2DI", "https://boxd.it/y41E"], ["Moothon", 2019, "SD3DI", "https://boxd.it/gmlm"], ["About Time", 2013, "JCS1RE", "https://boxd.it/43bI"], ["Babylon", 2022, "ED3DE", "https://boxd.it/mM02"], ["Doraemon: A Grandmother's Recollections", 2000, "SC1FW", "https://boxd.it/4irw"], ["Pokémon Origins", 2013, "JC1FW", "https://boxd.it/Azsq"], ["Pokémon Evolutions", 2021, "JC1FW", "https://boxd.it/wZs4"], ["Hope", 2013, "SD3DW", "https://boxd.it/7x5Q"], ["The Attorney", 2013, "ES2DW", "https://boxd.it/77Pe"], ["Cope", 2025, "S2DE", "https://boxd.it/SBXQ"], ["How to Lose a Guy in 10 Days", 2003, "JC1RE", "https://boxd.it/1XwG"], ["Suicide Club", 2001, "D3HW", "https://boxd.it/1RkY"], ["As the Gods Will", 2014, "TD3HW", "https://boxd.it/76T0"], ["Helter Skelter", 2012, "DB3DW", "https://boxd.it/3ybW"], ["Antiporno", 2016, "DB3DW", "https://boxd.it/eDjy"], ["Scream", 1996, "T2HE", "https://boxd.it/24EC"], ["The Lives of Others", 2006, "ST2DW", "https://boxd.it/2a4A"], ["2LDK", 2003, "TD3HW", "https://boxd.it/1ykg"], ["Ikebukuro West Gate Park", 2000, "TJ2CW", "https://boxd.it/y8ly"], ["If I Had Legs I'd Kick You", 2025, "DB3DE", "https://boxd.it/HUtS"], ["Killing Veerappan", 2016, "T2CI", "https://boxd.it/dISG"], ["Kshana Kshanam", 1991, "TJ2CI", "https://boxd.it/2PzY"], ["Premam", 2015, "JS1RI", "https://boxd.it/bod0"], ["Wake Up Sid", 2009, "JC1RI", "https://boxd.it/1C8e"], ["Inner Depravity", 2005, "D3HW", "https://boxd.it/k92E"], ["Melancholie der Engel", 2009, "DB3FW", "https://boxd.it/4XmC"], ["Traces of Death", 1993, "D3HE", "https://boxd.it/50sI"], ["Electric Dragon 80000V", 2001, "BT3FW", "https://boxd.it/1sew"], ["Gozu", 2003, "BD3HW", "https://boxd.it/1RTa"], ["Drive", 1997, "TJ2CW", "https://boxd.it/1vxQ"], ["A Bittersweet Life", 2005, "TD3CW", "https://boxd.it/1U4Y"], ["Cold Fish", 2010, "D3HW", "https://boxd.it/2dxK"], ["Hannah Montana 20th Anniversary Special", 2026, "JC1RE", "https://boxd.it/113CM"], ["Whisper of the Heart", 1995, "CJ1RW", "https://boxd.it/17uy"], ["Lady Bird", 2017, "JS1DE", "https://boxd.it/dGNE"], ["Ugramm", 2014, "T3CI", "https://boxd.it/dql0"], ["Charlie", 2015, "JSC1RI", "https://boxd.it/cV5q"], ["Serpico", 1973, "T2CE", "https://boxd.it/1ZjE"], ["Jaws", 1975, "T2HE", "https://boxd.it/2a5e"], ["The Deer Hunter", 1978, "SD3CE", "https://boxd.it/1T6O"], ["Apocalypse Now", 1979, "DE3CE", "https://boxd.it/6ZS"], ["Lootera", 2013, "S1RI", "https://boxd.it/69o8"], ["Predestination", 2014, "BT2FE", "https://boxd.it/6bJM"], ["Koyaanisqatsi", 1982, "BE1FE", "https://boxd.it/1U9E"], ["Anji", 2004, "J2FI", "https://boxd.it/3PYG"], ["Ammoru", 1995, "T2FI", "https://boxd.it/8GYi"], ["Nirvanna the Band the Show the Movie", 2025, "JB1RE", "https://boxd.it/HG9a"], ["The Holy Mountain", 1973, "BD3FW", "https://boxd.it/20mu"], ["Geethanjali", 1989, "SJ1RI", "https://boxd.it/4I5c"], ["Yavarum Nalam", 2009, "T2HI", "https://boxd.it/1Ekm"], ["Lady Snowblood", 1973, "DT3CW", "https://boxd.it/26Fi"], ["April Story", 1998, "CJ1RW", "https://boxd.it/2n9o"], ["The Motorcycle Diaries", 2004, "EJ1DW", "https://boxd.it/28nU"], ["Kes", 1969, "S2DE", "https://boxd.it/1Qi8"], ["Coherence", 2013, "BT2FE", "https://boxd.it/6xza"], ["Anukokunda Oka Roju", 2005, "T2CI", "https://boxd.it/2P6W"], ["Werckmeister Harmonies", 2000, "BD3DW", "https://boxd.it/1zzw"], ["Synecdoche, New York", 2008, "BS2DE", "https://boxd.it/23zw"], ["Leviathan", 2014, "SD3DW", "https://boxd.it/7Ub8"], ["2046", 2004, "SB2RW", "https://boxd.it/29tu"], ["Doppelgänger", 2003, "BT2HW", "https://boxd.it/1hra"], ["Tampopo", 1985, "JC1RW", "https://boxd.it/1SZe"], ["Pulse", 2001, "DT2HW", "https://boxd.it/1s3y"], ["Real Women Have Curves", 2002, "J1DE", "https://boxd.it/1lBI"], ["Howl's Moving Castle", 2004, "CJE1FW", "https://boxd.it/23De"], ["Lost in Translation", 2003, "SC1RE", "https://boxd.it/2b0E"], ["Kandukondain Kandukondain", 2000, "JS1RI", "https://boxd.it/2ha6"], ["Yennai Arindhaal", 2015, "T2CI", "https://boxd.it/9zp8"], ["Billa II", 2012, "T2CI", "https://boxd.it/3RWW"], ["Infernal Affairs", 2002, "TD2CW", "https://boxd.it/1Vqw"], ["I Am a Hero", 2015, "TJ3HW", "https://boxd.it/8qgu"], ["Shaun of the Dead", 2004, "J2RE", "https://boxd.it/29J8"], ["No Country for Old Men", 2007, "TD3CE", "https://boxd.it/21ew"], ["Come and See", 1985, "DS3CW", "https://boxd.it/1w9q"], ["Berlin Alexanderplatz", 1980, "DE3DW", "https://boxd.it/B9mo"], ["Aithe", 2003, "T2CI", "https://boxd.it/a1hc"], ["Don't Wake the Sleeping Child", 2025, "S2DW", "https://boxd.it/S38u"], ["Magnolia", 1999, "SBE3DE", "https://boxd.it/2aze"], ["Amadeus", 1984, "ES2DE", "https://boxd.it/2aH8"], ["Metropolis", 1927, "EB2FW", "https://boxd.it/71a"], ["Resurrection", 2025, "BE2FW", "https://boxd.it/x9DG"], ["Exhuma", 2024, "TD3HW", "https://boxd.it/vCu0"], ["Treasure Planet", 2002, "JE1FE", "https://boxd.it/1Znm"], ["Thallumaala", 2022, "J2RI", "https://boxd.it/wDmy"], ["Mayaanadhi", 2017, "SC2RI", "https://boxd.it/goaU"], ["Midnight Diner", 2014, "CS1DW", "https://boxd.it/9Uao"], ["Sore: A Wife from the Future", 2025, "SB1RW", "https://boxd.it/RjY0"], ["Kannathil Muthamittal", 2002, "S2DI", "https://boxd.it/10qu"], ["Anantaram", 1987, "B2DI", "https://boxd.it/8m3G"], ["Vanilla Sky", 2001, "BS2FE", "https://boxd.it/27TK"], ["Mulholland Drive", 2001, "BD3HE", "https://boxd.it/297o"], ["Stay", 2005, "BD2HE", "https://boxd.it/20BE"], ["The Double Life of Véronique", 1991, "SB1DW", "https://boxd.it/28va"], ["Decalogue I", 1989, "S2DW", "https://boxd.it/3WmE"], ["Vaaranam Aayiram", 2008, "SJ2DI", "https://boxd.it/15yo"], ["Soodhu Kavvum", 2013, "J2CI", "https://boxd.it/5IRi"], ["Pariyerum Perumal", 2018, "SD3DI", "https://boxd.it/gyAy"], ["Mandela", 2021, "JS1RI", "https://boxd.it/ulX8"], ["Kaaka Muttai", 2014, "JC1DI", "https://boxd.it/7Ryy"], ["Marvel One-Shot: Agent Carter", 2013, "J1CE", "https://boxd.it/6jeC"], ["Kattradhu Thamizh", 2007, "S2DI", "https://boxd.it/2hWE"], ["Willy Wonka & the Chocolate Factory", 1971, "JC1FE", "https://boxd.it/2aLu"], ["Naan Mahaan Alla", 2010, "T2CI", "https://boxd.it/Cv6"], ["Bench Talkies", 2015, "J1RI", "https://boxd.it/aMZK"], ["The Little Prince and the Eight-Headed Dragon", 1963, "EJ1FW", "https://boxd.it/2Yrk"], ["Of Stars and Men", 1961, "B1FW", "https://boxd.it/67R8"], ["The Prince of Egypt", 1998, "ES1FE", "https://boxd.it/1XGQ"], ["Do the Right Thing", 1989, "SD2DE", "https://boxd.it/29gA"], ["Crouching Tiger, Hidden Dragon", 2000, "EJ2CW", "https://boxd.it/2b1M"], ["The Big Lebowski", 1998, "J1RE", "https://boxd.it/2b6C"], ["Paruthiveeran", 2007, "DS3DI", "https://boxd.it/2hOU"], ["Haider", 2014, "SD3DI", "https://boxd.it/8E5A"], ["Needi Naadi Oke Katha", 2018, "S2DI", "https://boxd.it/iBTi"], ["Onaayum Aattukkuttiyum", 2013, "TB2CI", "https://boxd.it/6DMa"], ["Nandalala", 2010, "SJ1DI", "https://boxd.it/3Kcs"], ["Anjathe", 2008, "T2CI", "https://boxd.it/vve"], ["Hadestown: The Musical", 2026, "SE1RE", "https://boxd.it/Th8A"], ["Slumdog Millionaire", 2008, "JSE2DI", "https://boxd.it/1S3E"], ["Maqbool", 2003, "TD2CI", "https://boxd.it/1CbM"], ["The Darjeeling Limited", 2007, "JC1RE", "https://boxd.it/24as"], ["Piku", 2015, "JC1RI", "https://boxd.it/aXUc"], ["The Namesake", 2006, "SC1DI", "https://boxd.it/1JJG"], ["Where Is the Friend's House?", 1987, "CS1DW", "https://boxd.it/ELg"], ["Kadhalum Kadanthu Pogum", 2016, "J1RI", "https://boxd.it/dvpw"], ["Queen", 2013, "J1RI", "https://boxd.it/7gjQ"], ["Taste of Cherry", 1997, "SB1DW", "https://boxd.it/1m8W"], ["Lost Ladies", 2023, "J1RI", "https://boxd.it/I0mS"], ["Beautiful Boy", 2018, "S2DE", "https://boxd.it/g76Q"], ["Look Back", 2024, "S1FW", "https://boxd.it/LjA6"]];
+const F=RAW.map(([n,y,t,u])=>({n,y,u,m:t.slice(0,-3),i:t.slice(-3,-2),g:t.slice(-2,-1),r:t.slice(-1)}));
+const LG={T:[22,32,81,98,99,100,119,126,127,128,129,130,132,134,142,145,146,147,155,135],U:[52,53,67,76,77,80,87,107,144],M:[33,54,68,115,116,120],H:[31,55,73,143,150,152,156,158],J:[36,37,38,43,44,45,46,49,50,59,60,61,63,65,82,83,92,93,94,96,102,117,136,160],K:[39,40,62,113],O:[28,48,56,57,79,88,90,91,101,105,106,111,112,118,124,125,140,157]};
+const PC={s:[17,19,28,29,30,48,57,60,75,79,83,85,88,89,90,91,92,97,105,106,111,112,117,118,124,125,154,157],f:[1,3,4,13,21,24,44,47,53,59,67,70,82,86,87,99,100,101,102,103,104,107,127,134,147]};
+const FM={A:[36,37,38,65,96,114,136,138,160],R:[2,16,20,30,31,39,40,52,69,84,159],D:[25,26,27,58,75],M:[0,133,148]};
+const TH={L:[0,5,15,16,34,42,54,55,73,80,87,91,97,98,116,118,121,123,124,126,153,155,156],G:[7,9,54,55,65,66,83,85,95,96,126,128,130,146,154],F:[28,29,30,32,34,36,66,119,126,130,146,152,153,159],C:[8,10,12,21,31,40,52,62,63,67,69,99,100,101,104,122,127,134,147,150],W:[2,20,48,71,72,82,84,105,106,110,138,140,143,150],M:[3,5,11,14,15,17,19,24,57,60,74,79,86,89,92,109,112,121,122,123],S:[23,25,26,29,70,72,75,84,90,105],A:[0,1,28,35,57,65,89,93,109,110,111,124,148,160],P:[4,32,39,40,48,53,69,90,128,129,139,143,144,149,158],R:[7,9,13,36,37,38,54,55,103,114,130,135,141,151,152,160],H:[8,22,24,35,42,47,78,93,95,103,115,127,129,131,135,141,145,151,152],X:[3,4,6,10,18,43,44,45,47,49,56,58,60,63,77,81,94,113]};
+const tg=(M,i,d)=>Object.keys(M).find(k=>M[k].includes(i))||d;
+F.forEach((f,i)=>{f.l=tg(LG,i,'E');f.p=tg(PC,i,'m');f.fm=tg(FM,i,'L');f.th=Object.keys(TH).filter(k=>TH[k].includes(i)).join('')});
+const MN={J:'Feel-good',S:'Emotional',T:'Thrilling',B:'Mind-bending',C:'Cozy',D:'Dark',E:'Epic'};
+const GN={D:'Drama',H:'Thriller/Horror',R:'Romance/Comedy',F:'Sci‑fi/Fantasy/Anime',C:'Crime/Action/War'};
+const RN={E:'Hollywood',I:'Indian',W:'World cinema'};
+const Q=[
+{k:'m',multi:3,q:"What's your mood tonight?",sub:"Pick up to 3",o:[["😄","Feel-good","J"],["🥲","Emotional","S"],["😰","Thrill me","T"],["🌀","Mind-bend","B"],["🧸","Cozy & gentle","C"],["🩸","Dark & twisted","D"],["🏔️","Epic & grand","E"],["📼","Nostalgic","SC"],["💘","Romantic","JS"],["💔","Heartbroken","SD"],["🧭","Adventurous","EJ"],["🧠","Philosophical","BS"],["🔥","Rebellious","DE"],["🤪","Silly & chaotic","JT"]]},
+{k:'i',q:"How much can you take tonight?",o:[["🌿","Light & easy","1"],["⚖️","Some weight","2"],["🔥","Hit me hard","3"],["🎲","Anything","*"]]},
+{k:'g',multi:3,q:"Which genres sound good?",sub:"Pick up to 3",o:[["🎭","Drama","D"],["🕵️","Thriller","H"],["🩸","Horror","HX"],["💕","Romance","RL"],["😂","Comedy","RH"],["🚀","Sci‑fi / Fantasy","F"],["🔫","Crime","C"],["⚔️","War & history","CW"],["🎲","Surprise me","*"]]},
+{k:'l',multi:2,q:"In which language?",sub:"Pick up to 2",o:[["🇬🇧","English","E"],["🪔","Tamil","T"],["🎬","Telugu / Kannada","U"],["🌴","Malayalam","M"],["🎶","Hindi","H"],["🗾","Japanese","J"],["🇰🇷","Korean","K"],["🌍","European & other","O"],["🎲","Any language","*"]]},
+{k:'e',multi:2,q:"Which era?",sub:"Pick up to 2",o:[["🎞️","Before 1970","0"],["📼","1970s – 80s","1"],["💿","1990s","2"],["📀","2000s","3"],["📱","2010s","4"],["🆕","2020s","5"],["🎲","Any era","*"]]},
+{k:'t',multi:3,q:"Which story ingredients do you want?",sub:"Pick up to 3",o:[["💞","Love & heartbreak","L"],["🎒","Growing up","G"],["👨‍👩‍👧","Family & bonds","F"],["⚖️","Crime & justice","C"],["🪖","War & history","W"],["🪞","Mind & reality","M"],["🏝️","Survival & nature","S"],["🎨","Art & ambition","A"],["✊","Society & power","P"],["🤝","Friendship","R"],["🃏","Humour & satire","H"],["🕯️","Fear & the supernatural","X"],["🎲","No preference","*"]]},
+{k:'n',q:"What kind of ending?",o:[["🌅","Happy & hopeful","h"],["🥀","Bittersweet","b"],["🖤","Devastating","d"],["🔀","Twisty or open-ended","x"],["🎲","Surprise me","*"]]},
+{k:'h',multi:6,q:"Any dealbreakers?",sub:"Pick any that apply",o:[["🔪","Gore & brutality","gore"],["😢","Heavy sadness","sad"],["💬","Lots of subtitles","subs"],["🐌","Slow pacing","slow"],["🕰️","Very old films","old"],["🎨","Animation","anim"],["✅","No dealbreakers","*"]]}];
+const $=id=>document.getElementById(id);let A={},qi=0,rank=[],shown=[];
+$('cnt').textContent=F.length+' films on your watchlist';
+function show(id){['intro','quiz','res','all'].forEach(x=>$(x).classList.toggle('hid',x!==id))}
+function start(){A={};qi=0;ask();show('quiz')}
+let S=[];
+const ER=y=>y<1970?0:y<1990?1:y<2000?2:y<2010?3:y<2020?4:5;
+const has=x=>x!=null&&x!=='*'&&!(Array.isArray(x)&&x[0]==='*');
+const lab=(k,v)=>{const q=Q.find(z=>z.k==k);const o=q.o.find(z=>z[2]==v);return o?o[1]:v};
+function ask(){const q=Q[qi],prev=A[q.k];S=Array.isArray(prev)?prev.filter(x=>x!='*'):[];
+$('pb').style.width=(qi/Q.length*100)+'%';$('step').textContent='QUESTION '+String(qi+1).padStart(2,'0')+' / '+String(Q.length).padStart(2,'0');
+$('qt').innerHTML=q.q+(q.sub?`<small class="sub">${q.sub}</small>`:'');
+$('qo').innerHTML=q.o.map((o,j)=>`<button class="opt${S.includes(o[2])?' sel':''}" style="animation-delay:${j*35}ms" onclick="pick('${o[2]}')"><span>${o[0]}</span>${o[1]}</button>`).join('');
+let c=$('qc');if(!c){c=document.createElement('div');c.id='qc';c.className='qctl';$('qo').after(c)}
+c.innerHTML=`<button class="mini" onclick="back()" ${qi?'':'disabled'}>← Back</button><button class="mini" onclick="skip()">Skip</button>`+(q.multi?`<button class="btn" id="go" onclick="next()" ${S.length?'':'disabled'}>Continue →</button>`:'')}
+function pick(v){const q=Q[qi];if(!q.multi){A[q.k]=v;return next()}
+if(v=='*'){S=['*'];return next()}
+const i=S.indexOf(v);if(i>=0)S.splice(i,1);else{if(S.length>=q.multi)S.shift();S.push(v)}
+[...$('qo').children].forEach((b,j)=>b.classList.toggle('sel',S.includes(q.o[j][2])));$('go').disabled=!S.length}
+function next(){const q=Q[qi];if(q.multi)A[q.k]=S.slice();qi++;qi<Q.length?ask():finish()}
+function back(){if(qi>0){qi--;ask()}}
+function skip(){A[Q[qi].k]=Q[qi].multi?['*']:'*';qi++;qi<Q.length?ask():finish()}
+const endings=f=>{const e=[];if(/[JC]/.test(f.m))e.push('h');if(f.m.includes('S')&&f.i<3)e.push('b');if(f.i==3&&/[SD]/.test(f.m))e.push('d');if(/[BT]/.test(f.m))e.push('x');return e};
+const SET={solo:f=>(f.i>=2?.5:0)+(/[DBTS]/.test(f.m)?.5:0),date:f=>Math.min(1,(f.g=='R'?.4:0)+(/[JS]/.test(f.m)&&f.i<3?.3:0)+(f.i<=2?.1:0)+(f.th.includes('L')?.3:0)),
+friends:f=>(/[JT]/.test(f.m)?.4:0)+('HCR'.includes(f.g)?.3:0)+(f.i<=2?.3:0),family:f=>(f.i==1?.5:0)+(/[CJ]/.test(f.m)?.3:0)+(f.fm=='A'||f.g=='F'?.2:0),comfort:f=>(f.i==1?.5:0)+(f.m.includes('C')?.5:0)};
+const NO={gore:f=>f.i==3&&f.m.includes('D'),sad:f=>f.m.includes('S')&&f.i>=2,subs:f=>!'ET'.includes(f.l),slow:f=>f.p=='s',old:f=>f.y<1990,anim:f=>f.fm=='A'};
+const MAXW=33.5;
+function score(f){let s=0;const W=(w,r)=>{s+=w*(r===undefined?1:r)};
+W(8,has(A.m)?Math.min(1,A.m.reduce((t,x,i)=>{const n=[...x].filter(c=>f.m.includes(c)).length/x.length;return t+n*(5-i*.8)+(f.m[0]==x[0]?n:0)},0)/8):undefined);
+W(3,has(A.a)?Math.min(1,[...new Set(A.a.join(''))].filter(c=>f.m.includes(c)).length*1.5/3):undefined);
+W(3,has(A.i)?([1,.33][Math.abs(f.i-A.i)]??-.33):undefined);
+W(3,has(A.g)?Math.max(...A.g.map(v=>f.g==v[0]?(v[1]?(f.th.includes(v[1])?1:.5):1):0)):undefined);
+W(2.5,has(A.l)?(A.l.includes(f.l)?1:-.4):undefined);
+W(2,has(A.e)?Math.max(...A.e.map(e=>{const d=Math.abs(ER(f.y)-e);return d==0?1:d==1?.4:0})):undefined);
+W(1.5,has(A.p)?(A.p==f.p?1:(A.p!='m'&&f.p!='m'?-.4:.3)):undefined);
+W(2,has(A.f)?(A.f==f.fm?1:-.3):undefined);
+W(4,has(A.t)?Math.min(1,A.t.filter(x=>f.th.includes(x)).length/Math.min(2,A.t.length)):undefined);
+W(2.5,has(A.n)?(endings(f).includes(A.n)?1:0):undefined);
+W(2,has(A.s)?SET[A.s](f):undefined);
+if(has(A.h))A.h.forEach(x=>{if(NO[x]&&NO[x](f))s-=5});
+return Math.max(0,s)*15/MAXW+Math.random()*.6}
+function finish(){$('pb').style.width='100%';rank=F.map(f=>({f,s:score(f)})).sort((a,b)=>b.s-a.s);
+shown=rank.slice(0,5);render();show('res');scrollTo({top:0,behavior:'smooth'})}
+const pct=s=>Math.min(99,Math.round(s/15*100));
+function hue(n){let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))%360;return h}
+function posterHTML(f,id){const h=hue(f.n);return `<div class="poster" id="${id}" title="Click to set a poster image if it is missing"><div class="fb" style="background:linear-gradient(160deg,hsl(${h},70%,28%),hsl(${(h+60)%360},60%,10%))">${f.n}</div></div>`}
+const norm=s=>s.toLowerCase().replace(/[^a-z0-9]/g,'');
+const strip=s=>norm(s.replace(/^(the|a)\s+/i,''));
+async function wiki(f){const y=f.y;
+for(const q of vars(f).slice(0,3)){for(const s of [`${q} ${y||''} film`,`${q} film`]){try{
+const r=await fetch('https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrlimit=8&gsrsearch='+encodeURIComponent(s)+'&prop=pageimages|description&piprop=thumbnail&pithumbsize=500',{signal:AbortSignal.timeout(8000)});
+const d=await r.json(),kq=strip(q);
+const p=Object.values((d.query||{}).pages||{}).filter(x=>x.thumbnail&&x.thumbnail.height>=x.thumbnail.width*1.1).sort((a,b)=>a.index-b.index);
+const ds=x=>((x.description||'')+' '+x.title).toLowerCase(),isF=x=>/film|movie|anime|series|special/.test(ds(x));
+const wrongYear=x=>{const m=ds(x).match(/\b(18|19|20)\d\d\b/);return !!(m&&y&&Math.abs(+m[0]-y)>1)};
+const hit=p.find(x=>norm(x.title).includes(kq)&&isF(x)&&!wrongYear(x))||p.find(x=>x.index<=3&&kq.length>=4&&norm(x.title).includes(kq.slice(0,5))&&isF(x)&&y&&!wrongYear(x)&&[y-1,y,y+1].some(v=>ds(x).includes(String(v))));
+if(hit)return hit.thumbnail.source}catch(e){}}}return null}
+function itunes(f,q){q=q||f.n;return new Promise(res=>{const cb='cb'+Math.random().toString(36).slice(2),s=document.createElement('script');let fin=0;
+const done=u=>{if(fin)return;fin=1;delete window[cb];s.remove();res(u)};
+window[cb]=d=>{const m=(d.results||[]).find(x=>x.artworkUrl100&&Math.abs(new Date(x.releaseDate).getFullYear()-f.y)<=2&&(norm(x.trackName).includes(norm(q))||norm(q).includes(norm(x.trackName))));
+done(m?m.artworkUrl100.replace('100x100bb','500x750bb'):null)};
+s.onerror=()=>done(null);setTimeout(()=>done(null),7000);
+s.src='https://itunes.apple.com/search?media=movie&entity=movie&limit=10&term='+encodeURIComponent(q)+'&callback='+cb;document.body.appendChild(s)})}
+const tkey=()=>{try{return localStorage.getItem('tmdbKey')||''}catch(e){return ''}};
+const ALT={64:'Hannah Montana',36:'Doraemon Nobita no Obaachan no Omoide',118:'Sore Istri dari Masa Depan',112:'Resurrection Bi Gan',131:'Agent Carter One-Shot'};
+F.forEach((f,i)=>f.ix=i);const ALTN={};Object.keys(ALT).forEach(i=>{if(F[i])ALTN[F[i].n]=ALT[i]});
+const vars=f=>[...new Set([ALTN[f.n],f.n,f.n.split(':')[0],f.n.replace(/\(.*?\)/g,'').trim()].filter(Boolean))];
+async function tj(u,k){const bear=k.length>40;const r=await fetch('https://api.themoviedb.org/3/'+u+'&include_adult=false'+(bear?'':'&api_key='+k),{headers:bear?{Authorization:'Bearer '+k}:{},signal:AbortSignal.timeout(8000)});return r.json()}
+async function tmdb(f){const k=tkey();if(!k)return null;const yr=x=>+((x.release_date||x.first_air_date||'0').slice(0,4));
+try{for(const q of vars(f)){const e=encodeURIComponent(q),kq=strip(q);
+const sim=x=>[x.title,x.original_title,x.name,x.original_name].some(t=>t&&norm(t).length>2&&(norm(t).includes(kq)||kq.includes(norm(t))));
+for(const u of [`search/movie?query=${e}&year=${f.y}`,`search/movie?query=${e}`,`search/tv?query=${e}&first_air_date_year=${f.y}`,`search/tv?query=${e}`]){
+const d=await tj(u,k);const m=(d.results||[]).filter(x=>x.poster_path).find(x=>sim(x)&&Math.abs(yr(x)-f.y)<=2);
+if(m)return 'https://image.tmdb.org/t/p/w500'+m.poster_path}}}catch(e){}return null}
+async function wikiT(f){try{const t=[`${f.n} (${f.y} film)`,`${f.n} (film)`].map(x=>x.replace(/\|/g,''));
+const r=await fetch('https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&redirects=1&prop=pageimages&piprop=thumbnail&pithumbsize=500&titles='+encodeURIComponent(t.join('|')),{signal:AbortSignal.timeout(8000)});
+const d=await r.json(),rd=(d.query||{}).redirects||[],p=Object.values((d.query||{}).pages||{}).filter(x=>x.thumbnail&&x.thumbnail.height>=x.thumbnail.width*1.1);
+const hit=t.map(x=>p.find(y=>y.title==x||rd.some(z=>z.from==x&&z.to==y.title))).find(Boolean);return hit?hit.thumbnail.source:null}catch(e){return null}}
+const ovr=f=>{try{return localStorage.getItem('pu:'+f.n)||''}catch(e){return ''}};
+async function itunesAll(f){for(const q of vars(f).slice(0,2)){const u=await itunes(f,q);if(u)return u}return null}
+function getPoster(f){if(!f.pp)f.pp=(async()=>ovr(f)||(await tmdb(f))||(await wikiT(f))||(await wiki(f))||(await itunesAll(f)))();return f.pp}
+document.addEventListener('click',e=>{const el=e.target.closest&&e.target.closest('.poster');if(!el||el.querySelector('img'))return;
+const f=(shown[+el.id.slice(1)]||{}).f;if(!f)return;const u=prompt('No poster found for "'+f.n+'".\nPaste an image URL (right-click any poster online → Copy image address):');
+if(u&&/^https?:\/\//.test(u.trim())){try{localStorage.setItem('pu:'+f.n,u.trim())}catch(x){}f.pp=undefined;render()}});
+function setKey(){const v=prompt("Paste your free TMDB API key (v3 key or v4 read token).\nGet one at themoviedb.org → Settings → API.\nLeave empty to remove it.",tkey());if(v===null)return;
+try{v.trim()?localStorage.setItem('tmdbKey',v.trim()):localStorage.removeItem('tmdbKey')}catch(e){}
+F.forEach(f=>f.pp=undefined);keyBtn();if(typeof custom!='undefined'&&custom&&tkey())analyseAll();else if(shown.length)render()}
+function keyBtn(){$('keyb').textContent=tkey()?'TMDB key: on':'Add TMDB key'}
+
+function loadPoster(f,id){getPoster(f).then(u=>{if(!u)return;const el=$(id);if(!el)return;const im=new Image();im.onload=()=>{im.style.opacity=1};im.src=u;el.appendChild(im)})}
+function chips(f){return [...f.m].map(c=>`<span class="chip">${MN[c]}</span>`).join('')+`<span class="chip">${GN[f.g]}</span><span class="chip">${RN[f.r]}</span>`}
+function render(){const [t,...rest]=shown;let h=`<div class="result-head"><div><span class="eyebrow">Your matches</span><h2 class="t">Tonight's lineup</h2></div><p>Five films from your watchlist that fit tonight.</p></div>
+<div class="top">${posterHTML(t.f,'p0')}<div><span class="badge">★ Your #1 pick</span><h3>${t.f.n}</h3>
+<div class="meta">${t.f.y}</div><div class="m">${pct(t.s)}% match</div><div class="chips">${chips(t.f)}</div>
+<div class="row"><a class="btn" href="${t.f.u}" target="_blank" rel="noopener" style="text-decoration:none">Open on Letterboxd</a><button class="btn g" onclick="swap(0)">Not feeling it → next film</button></div></div></div>
+<div class="grid">${rest.map((x,i)=>`<div class="card" style="animation-delay:${i*90}ms"><div style="position:relative"><span class="pct">${pct(x.s)}%</span>${posterHTML(x.f,'p'+(i+1))}</div>
+<h4>${x.f.n}</h4><small>${x.f.y} · ${GN[x.f.g]}</small><div class="row"><a class="mini" href="${x.f.u}" target="_blank" rel="noopener">Letterboxd</a><button class="mini" onclick="swap(${i+1})">Swap ↻</button></div></div>`).join('')}</div>
+<div class="foot"><button class="btn g" onclick="start()">Retake the quiz</button></div>`;
+$('res').innerHTML=h;shown.forEach((x,i)=>loadPoster(x.f,'p'+i)); window.scrollTo({top:0,behavior:'smooth'})}
+function swap(i){const nxt=rank.find(x=>!shown.includes(x));if(!nxt)return;shown[i]=nxt;render()}
+function why(f){const p=[];
+if(has(A.m))A.m.forEach(x=>{if([...x].some(c=>f.m.includes(c)))p.push(lab('m',x))});
+if(has(A.n)&&endings(f).includes(A.n))p.push(lab('n',A.n)+' ending');
+if(has(A.l)&&A.l.includes(f.l))p.push(lab('l',f.l));
+if(has(A.t))A.t.forEach(x=>{if(f.th.includes(x))p.push(lab('t',x))});
+if(has(A.p)&&A.p==f.p)p.push(lab('p',f.p));
+if(has(A.f)&&A.f==f.fm&&f.fm!='L')p.push(lab('f',f.fm));
+if(has(A.s)&&SET[A.s](f)>=.7)p.push(lab('s',A.s));
+return p.length?'Matches: '+p.slice(0,6).join(' · '):'A wildcard from your list'}
+const render0=render;render=function(){render0();if(rnd){const b=document.querySelector('.top .badge'),m=document.querySelector('.top .m');if(b)b.textContent='Random pick';if(m)m.textContent='Feeling lucky';return}const w=f=>`<div class="why">${why(f)}</div>`;
+const m=document.querySelector('.top .meta');if(m)m.insertAdjacentHTML('afterend',w(shown[0].f));
+document.querySelectorAll('.grid .card small').forEach((s,i)=>shown[i+1]&&s.insertAdjacentHTML('afterend',w(shown[i+1].f)))};
+keyBtn();
+let rnd=false;
+const finish0=finish;finish=function(){rnd=false;finish0()};
+function randomPick(){rnd=true;A={};rank=F.map(f=>({f,s:15,r:Math.random()})).sort((a,b)=>a.r-b.r);shown=[rank[0]];render();show('res');scrollTo({top:0,behavior:'smooth'})}
+async function checkAll(){const box=$('pchk');box.style.display='block';let done=0,ok=0;const miss=[],q=[...F];box.textContent='Checking posters… 0/'+F.length;
+await Promise.all([0,1,2,3].map(async()=>{while(q.length){const f=q.shift();const u=await getPoster(f);done++;u?ok++:miss.push(f);box.textContent=`Checking posters… ${done}/${F.length} · found ${ok}`}}));
+box.innerHTML=`<b>${ok}/${F.length} posters found.</b> `+(miss.length?'Missing — click a title to paste an image link:<br>'+miss.map(f=>`<span class="chip" style="cursor:pointer;display:inline-block;margin:3px" onclick="fixP(${f.ix},this)">${f.n}</span>`).join(' '):'All set 🎉')+' <button class="mini" onclick="$(\'pchk\').style.display=\'none\'">close</button>'}
+function fixP(i,el){const f=F[i],u=prompt('Image URL for "'+f.n+'":');if(u&&/^https?:\/\//.test(u.trim())){try{localStorage.setItem('pu:'+f.n,u.trim())}catch(x){}f.pp=Promise.resolve(u.trim());el.remove()}}
+let AS='',AO='az',io;
+function showAll(){show('all');renderAll();scrollTo({top:0,behavior:'smooth'})}
+function renderAll(){const q=norm(AS),y=AS.trim();let L=F.filter(f=>!q&&!y||norm(f.n).includes(q)||String(f.y).includes(y));
+L.sort(AO=='az'?(a,b)=>a.n.localeCompare(b.n):AO=='new'?(a,b)=>b.y-a.y:AO=='old'?(a,b)=>a.y-b.y:(a,b)=>a.ix-b.ix);
+$('acount').textContent=L.length+' of '+F.length+' films';
+$('ag').innerHTML=L.map(f=>`<a href="${f.u}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${posterHTML(f,'ap'+f.ix)}<div style="font:600 13px/1.3 Inter,sans-serif;margin-top:8px">${f.n}</div><small style="color:#9e9aa7">${f.y} · ${GN[f.g]}</small></a>`).join('');
+if(io)io.disconnect();io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const id=e.target.id;io.unobserve(e.target);loadPoster(F[+id.slice(2)],id)}}),{rootMargin:'300px'});
+document.querySelectorAll('#ag .poster').forEach(el=>io.observe(el))}
+/* ---- custom watchlists ---- */
+let custom=false;
+const kk=f=>(norm(f.n)||f.n)+f.y;
+const KNOWN={};F.forEach(f=>{KNOWN[kk(f)]={m:f.m,i:f.i,g:f.g,r:f.r,l:f.l,p:f.p,fm:f.fm,th:f.th}});
+const SAMPLE=F.map(f=>({n:f.n,y:f.y,u:f.u}));
+const lg=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}},ls=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const DEF={m:'S',i:'2',g:'D',r:'W',l:'E',p:'m',fm:'L',th:''};
+function setFilms(L,c){custom=c;F.length=0;L.forEach((f,i)=>F.push(Object.assign({},DEF,f,{ix:i,pp:undefined})));rank=[];shown=[];
+$('cnt').textContent=F.length+' films · '+(c?'your list':'sample list');$('reset').style.display=c?'inline-flex':'none'}
+function resetList(){try{localStorage.removeItem('wl')}catch(e){}setFilms(SAMPLE.map(f=>({...f})),false);F.forEach(f=>Object.assign(f,KNOWN[kk(f)]));$('upst').textContent='Back to the sample list.';$('startb').disabled=false;show('intro')}
+function parseCSV(t){const rows=[];let r=[],c='',q=false;for(let i=0;i<t.length;i++){const ch=t[i];
+if(q){if(ch=='"'){if(t[i+1]=='"'){c+='"';i++}else q=false}else c+=ch}
+else if(ch=='"')q=true;else if(ch==','){r.push(c);c=''}
+else if(ch=='\n'||ch=='\r'){if(ch=='\r'&&t[i+1]=='\n')i++;r.push(c);c='';if(r.length>1||r[0]!=='')rows.push(r);r=[]}else c+=ch}
+if(c!==''||r.length){r.push(c);rows.push(r)}return rows}
+async function handleFile(file){const st=$('upst');if(!file)return;
+try{const rows=parseCSV((await file.text()).replace(/^\uFEFF/,'')),hd=(rows.shift()||[]).map(x=>x.trim().toLowerCase());
+const ni=hd.findIndex(x=>/^(name|title|film)$/.test(x)),yi=hd.findIndex(x=>/year/.test(x)),ui=hd.findIndex(x=>/uri|url|link/.test(x));
+if(ni<0){st.textContent="Couldn't find a Name column. Use a Letterboxd export like watchlist.csv.";return}
+const seen=new Set(),L=[];rows.forEach(r=>{const n=(r[ni]||'').trim(),y=parseInt(r[yi])||0;if(!n)return;const f={n,y,u:(ui>=0&&/^https?:/.test(r[ui]||''))?r[ui].trim():'https://letterboxd.com/search/'+encodeURIComponent(n+' '+(y||''))+'/'},key=kk(f);if(seen.has(key))return;seen.add(key);L.push(f)});
+if(!L.length){st.textContent='That file has no films in it.';return}
+setFilms(L,true);await analyseAll()}catch(e){st.textContent='Could not read that file.'}}
+const GM={27:['D','T'],53:['T'],9648:['T','B'],80:['T','D'],28:['T','E'],12:['E','J'],16:['C','J'],10751:['C','J'],35:['J'],10749:['J','S'],18:['S'],36:['E','S'],10752:['D','E'],878:['B','E'],14:['E','B'],10402:['J'],99:['B'],37:['E']};
+const GG={27:'H',53:'H',9648:'H',878:'F',14:'F',16:'F',80:'C',28:'C',12:'C',10752:'C',37:'C',10749:'R',35:'R',18:'D',36:'D',10751:'F',10402:'R',99:'D'};
+const GT={10749:'L',10751:'F',80:'C',10752:'W',36:'W',878:'M',9648:'M',12:'S',10402:'A',35:'H',27:'X'};
+const LM={en:'E',ta:'T',te:'U',kn:'U',ml:'M',hi:'H',ja:'J',ko:'K'};
+function derive(d){const ids=(d.genres||[]).map(x=>x.id),has2=x=>ids.includes(x),any=a=>ids.some(x=>a.includes(x)),ol=d.original_language||'en',rt=d.runtime||(d.episode_run_time||[])[0]||100;
+const hard=any([27,10752])||(has2(80)&&has2(53)),soft=any([10751,16,35,10402])&&!any([18,53,27,80]);
+return{m:[...new Set(ids.flatMap(i=>GM[i]||[]))].slice(0,3).join('')||'S',g:ids.map(i=>GG[i]).find(Boolean)||'D',i:hard?'3':soft?'1':'2',
+r:ol=='en'?'E':['hi','ta','te','ml','kn','bn','mr','pa','gu','ur'].includes(ol)?'I':'W',l:LM[ol]||'O',
+p:rt>=140&&!any([28,53,12])?'s':rt<=110&&any([28,53,27])?'f':'m',fm:has2(99)?'D':has2(16)?'A':has2(10402)?'M':'L',
+th:[...new Set(ids.map(i=>GT[i]).filter(Boolean))].join('')}}
+async function tfind(f,k){const yr=x=>+((x.release_date||x.first_air_date||'0').slice(0,4));
+for(const q of vars(f)){const e=encodeURIComponent(q),kq=strip(q);
+const sim=x=>[x.title,x.original_title,x.name,x.original_name].some(t=>t&&norm(t).length>2&&(norm(t).includes(kq)||kq.includes(norm(t))));
+for(const [kind,u] of [['movie',`search/movie?query=${e}&year=${f.y}`],['movie',`search/movie?query=${e}`],['tv',`search/tv?query=${e}&first_air_date_year=${f.y}`],['tv',`search/tv?query=${e}`]]){
+const d=await tj(u,k),m=(d.results||[]).find(x=>sim(x)&&(!f.y||Math.abs(yr(x)-f.y)<=2));if(m)return{kind,id:m.id,poster:m.poster_path}}}return null}
+async function analyseAll(){const k=tkey(),cache=lg('tg2',{}),st=$('upst'),sb=$('startb');
+F.forEach(f=>{const t=KNOWN[kk(f)];if(t)Object.assign(f,t);f.done=!!t});
+const q=F.filter(f=>!f.done),total=q.length;
+if(total&&!k){st.textContent=`Loaded ${F.length} films. ${total} aren't in my built-in list, so they get neutral tags. Add a free TMDB key (Posters menu) and I'll analyse them for mood matching.`;ls('wl',F.map(f=>({n:f.n,y:f.y,u:f.u})));return}
+sb.disabled=true;let n=0,miss=0;
+await Promise.all([0,1,2,3,4].map(async()=>{while(q.length){const f=q.shift(),key=kk(f);let t=cache[key];
+if(!t){try{const x=await tfind(f,k);if(x){const d=await tj(`${x.kind}/${x.id}?v=1`,k);t=derive(d);t.pp=x.poster?'https://image.tmdb.org/t/p/w500'+x.poster:null;cache[key]=t}}catch(e){}}
+if(t){const{pp,...tags}=t;Object.assign(f,tags);if(pp&&!f.pp)f.pp=Promise.resolve(pp)}else miss++;
+n++;st.textContent=`Analysing your films… ${n}/${total}`}}));
+ls('tg2',cache);ls('wl',F.map(({n,y,u,m,i,g,r,l,p,fm,th})=>({n,y,u,m,i,g,r,l,p,fm,th})));
+sb.disabled=false;st.textContent=`Ready: ${F.length} films loaded`+(miss?`. ${miss} couldn't be matched on TMDB and use neutral tags.`:'.')}
+(()=>{const d=$('drop'),inp=$('csvf');inp.addEventListener('change',()=>handleFile(inp.files[0]));
+['dragover','dragenter'].forEach(ev=>d.addEventListener(ev,e=>{e.preventDefault();d.classList.add('over')}));
+['dragleave','drop'].forEach(ev=>d.addEventListener(ev,e=>{e.preventDefault();d.classList.remove('over')}));
+d.addEventListener('drop',e=>handleFile(e.dataTransfer.files[0]));
+const saved=lg('wl',null);if(saved&&saved.length){setFilms(saved,true);F.forEach(f=>{f.done=true})}else $('cnt').textContent=F.length+' films · sample list'})();
+</script></body></html>
